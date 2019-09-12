@@ -3,6 +3,14 @@ import QuizQuestionButton from './QuizQuestionButton.js'
 //import { prependOnceListener } from 'cluster'
 
 class QuizQuestion extends Component {
+  handleClick(buttonText) {
+    const buttonIsAnswer = (buttonText === this.props.quiz_question.answer)
+
+    if (buttonIsAnswer) {
+      this.props.showNextQuestionHandler()
+    }
+  }
+  
     render(props) {
         return (
             <main>
@@ -11,7 +19,9 @@ class QuizQuestion extends Component {
             </section>
             <section className="buttons">
               <ul>
-                  <li><QuizQuestionButton button_text={this.props.quiz_question.answer_options[0]} /></li>
+                {this.props.quiz_question.answer_options.map((answer_option,  index) => {
+                  return <QuizQuestionButton key={index} button_text={answer_option} clickHandler={this.handleClick.bind(this)} />
+                })}
               </ul>
             </section>
           </main>
